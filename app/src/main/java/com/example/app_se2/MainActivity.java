@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
             //lesen
             result = mBufferIn.readLine();
 
+            ergView.setText(result.toString());
+
             socket.close();
         }catch (Exception ex)
         {

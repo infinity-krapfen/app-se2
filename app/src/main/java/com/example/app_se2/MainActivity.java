@@ -2,6 +2,7 @@ package com.example.app_se2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,12 +39,28 @@ public class MainActivity extends AppCompatActivity {
         buttonsend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessage(numbSend.getText().toString());
-            }
-        });
-    }
+                new AsyncTask<String, String, String>() {
 
-    protected void sendMessage(final String message)
+                    @Override
+                    protected String doInBackground(String... message) {
+                        String result = sendMessage(message[0]);
+                        publishProgress(result);
+                        return null;
+                    }
+
+                    @Override
+                    protected void onProgressUpdate(String... values) {
+                        super.onProgressUpdate(values);
+                        ergView.setText("");
+                        ergView.setText(values[0]);
+                    }
+
+                }.execute(numbSend.getText().toString());
+            }
+            });
+    }
+    
+    protected String sendMessage(final String message)
     {
         String result = "";
         try {
@@ -68,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
         Log.d("TCPClient", "Daten wurden gesendet");
-
+        return result;
     }
 
 

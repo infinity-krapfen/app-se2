@@ -2,6 +2,7 @@ package com.example.app_se2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         numbSend = (TextView) findViewById(R.id.numberInput);
 
         buttonsend.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View v) {
                 new AsyncTask<String, String, String>() {
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             }
             });
     }
-    
+
     protected String sendMessage(final String message)
     {
         String result = "";

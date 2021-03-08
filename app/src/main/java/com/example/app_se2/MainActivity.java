@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String SERVER_DOMAIN = "se2-isys.aau.at";
     public static final int SERVER_PORT = 53212;
     private Button buttonsend = null;
+    private Button buttonCheck = null;
     private TextView matrView = null;
     private TextView numbSend = null;
     private TextView ergView = null;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         buttonsend = (Button) findViewById(R.id.buttonSend);
+        buttonCheck = (Button) findViewById(R.id.buttonCheck);
         matrView = (TextView) findViewById(R.id.textView);
         ergView = (TextView) findViewById(R.id.outputView);
         numbSend = (TextView) findViewById(R.id.numberInput);
@@ -42,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new RunTaskSeparate().execute(numbSend.getText().toString());
+            }
+        });
+
+        buttonCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getBinaryQuersumme(numbSend.getText().toString());
             }
         });
 
@@ -87,6 +96,19 @@ public class MainActivity extends AppCompatActivity {
         return erg;
     }
 
+    protected void getBinaryQuersumme (String matr){
+
+        int result = 0;
+        String[] storage = matr.split(""); //teile jede Ziffer auf
+
+        for(int i = 0; i<storage.length; i++){
+
+            result += Integer.parseInt(storage[i]); // array wird durchgegangen und jedesmals mit dem Wert davor addiert
+        }
+        
+        ergView.setText("");
+       ergView.setText(Integer.toBinaryString(result));
+    }
 
 
 }

@@ -38,33 +38,33 @@ public class MainActivity extends AppCompatActivity {
         numbSend = (TextView) findViewById(R.id.numberInput);
 
         buttonsend.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("StaticFieldLeak")
+
             @Override
             public void onClick(View v) {
-                new AsyncTask<String, String, String>() {
-
-                    @Override
-                    protected String doInBackground(String... message) {
-                        String result = sendMessage(message[0]);
-                        publishProgress(result);
-                        return null;
-                    }
-
-                    @Override
-                    protected void onProgressUpdate(String... values) {
-                        super.onProgressUpdate(values);
-                        ergView.setText("");
-                        ergView.setText(values[0]);
-                    }
-
-                }.execute(numbSend.getText().toString());
+                new RunTaskSeparate().execute(numbSend.getText().toString());
             }
-            });
+        });
+
     }
 
-    protected String sendMessage(final String message)
+    public class RunTaskSeparate extends AsyncTask<String, String, String> {
+                @Override
+                protected String doInBackground(String... message) {
+                    String result =  sendMessage(message[0]);
+                    publishProgress(result);
+                    return null;
+                }
+                @Override
+                protected void onProgressUpdate(String... values) {
+                    super.onProgressUpdate(values);
+                    ergView.setText("");
+                    ergView.setText(values[0]);
+                }
+            }
+
+   protected String sendMessage(final String message)
     {
-        String result = "";
+        String erg = "";
         try {
             //Socket Verbindung wird aufgebaut
             Socket socket = new Socket(SERVER_DOMAIN, SERVER_PORT);
@@ -76,10 +76,7 @@ public class MainActivity extends AppCompatActivity {
             mBufferOut.println(message);
             mBufferOut.flush();
             //lesen
-            result = mBufferIn.readLine();
-
-            ergView.setText(result.toString());
-
+            erg = mBufferIn.readLine();
             socket.close();
         }catch (Exception ex)
         {
@@ -87,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
         Log.d("TCPClient", "Daten wurden gesendet");
-        return result;
+        return erg;
     }
 
 

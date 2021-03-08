@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
             result += Integer.parseInt(storage[i]); // array wird durchgegangen und jedesmals mit dem Wert davor addiert
         }
-        
+
         ergView.setText("");
        ergView.setText(Integer.toBinaryString(result));
     }

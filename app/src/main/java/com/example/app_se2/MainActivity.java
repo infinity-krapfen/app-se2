@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView ergView = null;
     private Socket clientSocket =null;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         numbSend = (TextView) findViewById(R.id.numberInput);
 
         buttonsend.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 new RunTaskSeparate().execute(numbSend.getText().toString());
@@ -53,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
                 getBinaryQuersumme(numbSend.getText().toString());
             }
         });
-
     }
 
     public class RunTaskSeparate extends AsyncTask<String, String, String> {
@@ -87,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             //lesen
             erg = mBufferIn.readLine();
             socket.close();
+
         }catch (Exception ex)
         {
             Log.d("TCPClient", "ERROR:"+ ex.getMessage());
@@ -103,11 +101,11 @@ public class MainActivity extends AppCompatActivity {
 
         for(int i = 0; i<storage.length; i++){
 
-            result += Integer.parseInt(storage[i]); // array wird durchgegangen und jedesmals mit dem Wert davor addiert
+            result += Integer.parseInt(storage[i]); // array wird durchgegangen und jedesmal mit dem Wert davor addiert
         }
 
         ergView.setText("");
-       ergView.setText(Integer.toBinaryString(result));
+       ergView.setText(Integer.toBinaryString(result)); // Das Resultat wird dann in Binär umgewandelt.
     }
 
 
